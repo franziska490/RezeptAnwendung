@@ -23,6 +23,7 @@ namespace RezeptAnwendung
         public MainWindow()
         {
             InitializeComponent();
+            // Test kommentar
         }
     }
 }
