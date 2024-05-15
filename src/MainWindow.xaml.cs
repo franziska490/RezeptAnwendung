@@ -44,8 +44,9 @@ namespace RezeptAnwendung
 
         private List<Recipe> SearchRecipes(string query)
         {
-            var client = new RestClient($"{EdamamApiUrl}?q={query}&app_id=c948850f&app_key={EdamamApiKey}");
+            var client = new RestClient($"{EdamamApiUrl}?q={query}&app_id=c948850f&app_key=8018ed233ad047a53b5af7c3241052da");
             var response = client.Get(new RestRequest());
+
 
             if (response.IsSuccessful)
             {
@@ -65,7 +66,6 @@ namespace RezeptAnwendung
                             Url = (string)recipeJson["url"],
                             Ingredients = recipeJson["ingredientLines"].ToObject<List<string>>(),
                             Preparation = (string)recipeJson["preparation"],
-                            Instructions = (string)recipeJson["instructions"], // Adjust this line according to the actual API response
                             ImageUrl = (string)recipeJson["image"]
                         };
                         recipes.Add(recipe);
@@ -84,7 +84,6 @@ namespace RezeptAnwendung
                 return new List<Recipe>();
             }
         }
-
 
         private void DisplayRecipes(List<Recipe> recipes)
         {
@@ -122,8 +121,6 @@ namespace RezeptAnwendung
         public List<string> Ingredients { get; set; }
         public string Url { get; set; }
         public string Preparation { get; set; }
-        public string Instructions { get; set; }  // Add this line
         public string ImageUrl { get; set; }
     }
-
 }

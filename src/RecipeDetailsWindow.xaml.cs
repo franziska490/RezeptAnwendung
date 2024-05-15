@@ -29,7 +29,7 @@ namespace RezeptAnwendung
             TitleLabel.Content = recipe.Label;
             IngredientsTextBox.Text = string.Join("\n", recipe.Ingredients);
             PreparationTextBox.Text = recipe.Preparation;
-            InstructionsTextBox.Text = recipe.Instructions;
+            
 
             if (!string.IsNullOrWhiteSpace(recipe.ImageUrl))
             {
