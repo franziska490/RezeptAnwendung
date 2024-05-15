@@ -7,13 +7,26 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10,10,239,10">
+        <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="10,10,10,10">
             <TextBox x:Name="SearchTextBox" Width="300" Margin="0,0,10,0" Background="#FFD2D0D0" Height="24" />
-            <Button x:Name="SearchButton" Content="Search" Click="SearchButton_Click" Width="40" FontSize="10" Background="#FFD2D0D0" BorderBrush="#FF8F8181"/>
+            <Button x:Name="SearchButton" Content="Search" Click="SearchButton_Click" Width="60" FontSize="10" Background="#FFD2D0D0" BorderBrush="#FF8F8181"/>
         </StackPanel>
 
-        <ListBox x:Name="RecipeListBox" Grid.Row="1" Margin="116,10,116,10" SelectionChanged="RecipeListBox_SelectionChanged">
+        <ComboBox x:Name="Filter" Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" Margin="10,10,0,10" Width="100" Height="25">
+            <ComboBox.Background>
+                <LinearGradientBrush EndPoint="0,1">
+                    <GradientStop Color="#FFF0F0F0"/>
+                    <GradientStop Color="#FFD2D0D0" Offset="1"/>
+                </LinearGradientBrush>
+            </ComboBox.Background>
+        </ComboBox>
+
+        <ListBox x:Name="RecipeListBox" Grid.Row="1" Grid.Column="1" Margin="10,10,10,10" SelectionChanged="RecipeListBox_SelectionChanged">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
@@ -25,16 +38,6 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <!-- Planer -->
-        <Button x:Name="Menue" Content="" HorizontalAlignment="Left" Height="24" Margin="557,0,0,0" VerticalAlignment="Center" Width="26" RenderTransformOrigin="1.51,-0.548" Background="#FFD2D0D0" FontFamily="Cooper Black" Click="Menue_Click"/>
-        <TextBlock HorizontalAlignment="Left" Height="24" Margin="561,0,0,0" TextWrapping="Wrap" Text=": =" VerticalAlignment="Center" Width="22" RenderTransformOrigin="1.775,0.283" FontSize="14"/>
-        <!-- -->
-
-        <ComboBox x:Name="MealTypeComboBox" SelectedIndex="0" Margin="10,24,503,322" Grid.Row="1">
-            <ComboBoxItem Content="Frühstück"/>
-            <ComboBoxItem Content="Mittagessen"/>
-            <ComboBoxItem Content="Abendessen"/>
-        </ComboBox>
-
+        <Button x:Name="Menue" Content=":=" HorizontalAlignment="Right" Height="24" Width="26" VerticalAlignment="Center" Background="#FFD2D0D0" FontFamily="Cooper Black" Margin="0,0,10,0" Grid.Row="0" Grid.Column="1"/>
     </Grid>
 </Window>
