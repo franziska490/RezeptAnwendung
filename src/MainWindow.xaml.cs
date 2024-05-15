@@ -26,6 +26,7 @@ namespace RezeptAnwendung
         public MainWindow()
         {
             InitializeComponent();
+
         }
 
         private void SearchButton_Click(object sender, RoutedEventArgs e)
@@ -123,4 +124,7 @@ namespace RezeptAnwendung
         public string Preparation { get; set; }
         public string ImageUrl { get; set; }
     }
+
+
+
 }
