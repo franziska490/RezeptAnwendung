@@ -14,7 +14,7 @@ using System.Windows.Shapes;
 using System.Windows.Navigation;
 using RezeptAnwendung;
 
-namespace RecipeApp
+namespace RezeptAnwendung
 {
     public partial class RecipeDetailsWindow : Window
     {
