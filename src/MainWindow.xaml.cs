@@ -65,7 +65,7 @@ namespace RezeptAnwendung
                             Url = (string)recipeJson["url"],
                             Ingredients = recipeJson["ingredientLines"].ToObject<List<string>>(),
                             Preparation = (string)recipeJson["preparation"],
-                            Instructions = (string)recipeJson["instructions"], // Adjust this line according to the actual API response
+                            Instructions = (string)recipeJson["instructions"],  // Passen Sie dies an, falls die API ein anderes Feld für Anweisungen verwendet
                             ImageUrl = (string)recipeJson["image"]
                         };
                         recipes.Add(recipe);
@@ -84,6 +84,7 @@ namespace RezeptAnwendung
                 return new List<Recipe>();
             }
         }
+
 
 
         private void DisplayRecipes(List<Recipe> recipes)
@@ -122,8 +123,9 @@ namespace RezeptAnwendung
         public List<string> Ingredients { get; set; }
         public string Url { get; set; }
         public string Preparation { get; set; }
-        public string Instructions { get; set; }  // Add this line
+        public string Instructions { get; set; }  
         public string ImageUrl { get; set; }
     }
+
 
 }
