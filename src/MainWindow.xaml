@@ -17,11 +17,13 @@
             <Button x:Name="SearchButton" Content="Search" Click="SearchButton_Click" Width="60" FontSize="10" Background="#FFD2D0D0" BorderBrush="#FF8F8181"/>
         </StackPanel>
 
-        <ComboBox x:Name="MealTypeComboBox" SelectedIndex="0" RenderTransformOrigin="0.57,2.93" Margin="0,49,0,303" Grid.Row="1" HorizontalAlignment="Left" Width="79">
+        <ComboBox x:Name="MealTypeComboBox" SelectedIndex="0" RenderTransformOrigin="0.57,2.93" Margin="10,49,0,0" Grid.Row="0" HorizontalAlignment="Left" Width="79">
             <ComboBoxItem Content="Frühstück"/>
             <ComboBoxItem Content="Mittagessen"/>
             <ComboBoxItem Content="Abendessen"/>
         </ComboBox>
+
+        <Button x:Name="NutritionDetailsButton" Content="Nutritions" Click="NutritionDetailsButton_Click" Grid.Row="1" Grid.Column="0" Margin="10,6,2,325" Width="80"/>
 
         <ListBox x:Name="RecipeListBox" Grid.Row="1" Grid.Column="1" Margin="10,10,10,10" SelectionChanged="RecipeListBox_SelectionChanged">
             <ListBox.ItemTemplate>
