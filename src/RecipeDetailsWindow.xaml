@@ -23,6 +23,6 @@
 
         <TextBox x:Name="PreparationTextBox" Grid.Row="3" Margin="10" TextWrapping="Wrap" AcceptsReturn="True" IsReadOnly="True"/>
 
-        <Image x:Name="RecipeImage" Grid.Row="1" Margin="444,78,53,60"/>
+        <Image x:Name="RecipeImage" Grid.Row="4" Margin="10" Width="200" Height="200"/>
     </Grid>
 </Window>
