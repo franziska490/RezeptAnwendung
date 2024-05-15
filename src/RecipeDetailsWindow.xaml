@@ -9,6 +9,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0" Margin="10">
@@ -24,5 +25,7 @@
         <TextBox x:Name="PreparationTextBox" Grid.Row="3" Margin="10" TextWrapping="Wrap" AcceptsReturn="True" IsReadOnly="True"/>
 
         <Image x:Name="RecipeImage" Grid.Row="4" Margin="10" Width="200" Height="200"/>
+
+        <TextBox x:Name="InstructionsTextBox" Grid.Row="5" Margin="10" TextWrapping="Wrap" AcceptsReturn="True" IsReadOnly="True" Text="Instructions"/>
     </Grid>
 </Window>
