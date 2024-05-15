@@ -32,6 +32,7 @@ namespace RezeptAnwendung
 
             if (!string.IsNullOrWhiteSpace(recipe.ImageUrl))
             {
+                // Rezept Bildd
                 RecipeImage.Source = new BitmapImage(new Uri(recipe.ImageUrl));
             }
             else

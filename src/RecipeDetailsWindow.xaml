@@ -15,7 +15,7 @@
             <Label x:Name="TitleLabel" FontWeight="Bold" FontSize="16"/>
         </StackPanel>
 
-        <TextBox x:Name="IngredientsTextBox" Grid.Row="1" Margin="10" TextWrapping="Wrap" AcceptsReturn="True" IsReadOnly="True"/>
+        <TextBox x:Name="IngredientsTextBox" Grid.Row="1" Margin="10,10,400,10" TextWrapping="Wrap" AcceptsReturn="True" IsReadOnly="True"/>
 
         <TextBlock Grid.Row="2" Margin="10">
             <Hyperlink x:Name="RecipeUrlHyperlink" RequestNavigate="RecipeUrlHyperlink_RequestNavigate"/>
@@ -23,6 +23,6 @@
 
         <TextBox x:Name="PreparationTextBox" Grid.Row="3" Margin="10" TextWrapping="Wrap" AcceptsReturn="True" IsReadOnly="True"/>
 
-        <Image x:Name="RecipeImage" Grid.Row="4" Margin="10" Width="200" Height="200"/>
+        <Image x:Name="RecipeImage" Grid.Row="1" Margin="444,78,53,60"/>
     </Grid>
 </Window>
