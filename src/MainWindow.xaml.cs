@@ -68,6 +68,7 @@ namespace RezeptAnwendung
                             Ingredients = recipeJson["ingredientLines"].ToObject<List<string>>(),
                             Preparation = (string)recipeJson["preparation"],
                             ImageUrl = (string)recipeJson["image"]
+                          
                         };
                         recipes.Add(recipe);
                     }
