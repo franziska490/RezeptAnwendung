@@ -13,7 +13,7 @@ namespace RecipeApp
         }
 
         private void DisplayRecipeDetails(Recipe recipe)
-        {
+        { 
             TitleLabel.Content = recipe.Label;
             IngredientsTextBox.Text = string.Join("\n", recipe.Ingredients);
             CookingInstructionsTextBox.Text = recipe.Instructions;
