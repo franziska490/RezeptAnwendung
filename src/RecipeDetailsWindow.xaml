@@ -5,29 +5,25 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" MinHeight="146.693"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition/>
             <!-- Fügen Sie diese Zeile für die Anweisungen hinzu -->
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Margin="10">
+        <StackPanel Grid.Row="0" Margin="10,10,10,10">
             <Label x:Name="TitleLabel" FontWeight="Bold" FontSize="16"/>
         </StackPanel>
 
-        <TextBox x:Name="IngredientsTextBox" Grid.Row="1" Margin="10" TextWrapping="Wrap" AcceptsReturn="True" IsReadOnly="True"/>
+        <TextBox x:Name="IngredientsTextBox" Margin="20,20,503,10" TextWrapping="Wrap" AcceptsReturn="True" IsReadOnly="True" Grid.RowSpan="3" Grid.Row="1"/>
 
-        <TextBlock Grid.Row="2" Margin="10">
+        <TextBlock Grid.Row="2" Margin="10,10,10,10">
             <Hyperlink x:Name="RecipeUrlHyperlink" RequestNavigate="RecipeUrlHyperlink_RequestNavigate"/>
         </TextBlock>
 
-        <TextBox x:Name="PreparationTextBox" Grid.Row="3" Margin="10" TextWrapping="Wrap" AcceptsReturn="True" IsReadOnly="True"/>
+        <Image x:Name="RecipeImage" Grid.Row="1" Margin="300,30,269,5"/>
 
-        <Image x:Name="RecipeImage" Grid.Row="4" Margin="10" Width="200" Height="200"/>
-
-        <TextBox x:Name="InstructionsTextBox" Grid.Row="5" Margin="10" TextWrapping="Wrap" AcceptsReturn="True" IsReadOnly="True"/>
-       
     </Grid>
 </Window>
