@@ -6,7 +6,6 @@ using System.Windows;
 using RestSharp;
 using Newtonsoft.Json.Linq;
 using System.Windows.Controls;
-using RezeptAnwendung;
 
 namespace RezeptAnwendung
 {
