@@ -7,7 +7,7 @@
 |------------------------------------|--------------------|--------|
 | Projektidee/Umsetzung überlegen    | 24.04 - 8.5.2024   | Beide  |
 | Rezept API Edamam Implementieren   | 08.05 - 09.05.2024 | Laura  |
-| Inhalt                             | Inhalt             | Inhalt |
+| GUI Anfang                         | 08.05 - 09.05.2024 | Franziska |
 | Inhalt                             | Inhalt             | Inhalt |
 | Inhalt                             | Inhalt             | Inhalt |
 | Inhalt                             | Inhalt             | Inhalt |

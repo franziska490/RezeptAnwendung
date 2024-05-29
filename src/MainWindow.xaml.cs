@@ -1,37 +1,63 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using RestSharp;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Windows.Controls;
 
 namespace RezeptAnwendung
 {
     public partial class MainWindow : Window
     {
-        private const string EdamamApiKey = "8018ed233ad047a53b5af7c3241052da";
-        private const string EdamamApiUrl = "https://api.edamam.com/search";
+        private const string MealDbApiUrl = "https://www.themealdb.com/api/json/v1/1/search.php";
+
+        public List<string> Categories { get; private set; }
 
         public MainWindow()
         {
             InitializeComponent();
 
+            // Lade die Mahlkategorien
+            LoadMealCategories();
+        }
+
+        private async void LoadMealCategories()
+        {
+            try
+            {
+                Categories = await GetMealCategoriesAsync();
+                CategoryComboBox.ItemsSource = Categories;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Fehler beim Laden der Mahlkategorien: {ex.Message}");
+            }
+        }
+
+        private async Task<List<string>> GetMealCategoriesAsync()
+        {
+            var client = new RestClient("https://www.themealdb.com/api/json/v1/1/categories.php");
+            var request = new RestRequest();
+            var response = await client.ExecuteAsync(request);
+
+            if (response.IsSuccessful)
+            {
+                var content = response.Content;
+                var json = JObject.Parse(content);
+
+                return json["categories"].Select(c => (string)c["strCategory"]).ToList();
+            }
+            else
+            {
+                throw new Exception("Fehler beim Abrufen der Mahlkategorien.");
+            }
         }
 
         private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
-            string query = SearchTextBox.Text;
+            string query = SearchTextBox.Text.Trim();
             if (!string.IsNullOrWhiteSpace(query))
             {
                 var recipes = SearchRecipes(query);
@@ -45,33 +71,24 @@ namespace RezeptAnwendung
 
         private List<Recipe> SearchRecipes(string query)
         {
-            var client = new RestClient($"{EdamamApiUrl}?q={query}&app_id=c948850f&app_key=8018ed233ad047a53b5af7c3241052da");
+            var client = new RestClient($"{MealDbApiUrl}?s={query}");
             var response = client.Get(new RestRequest());
-
 
             if (response.IsSuccessful)
             {
                 var content = response.Content;
                 var json = JObject.Parse(content);
 
-                if (json["hits"] != null)
+                if (json["meals"] != null)
                 {
-                    var recipes = new List<Recipe>();
-
-                    foreach (var hit in json["hits"])
+                    return json["meals"].Select(result => new Recipe
                     {
-                        var recipeJson = hit["recipe"];
-                        var recipe = new Recipe
-                        {
-                            Label = (string)recipeJson["label"],
-                            Url = (string)recipeJson["url"],
-                            Ingredients = recipeJson["ingredientLines"].ToObject<List<string>>(),
-                            Preparation = (string)recipeJson["preparation"],
-                            ImageUrl = (string)recipeJson["image"]
-                        };
-                        recipes.Add(recipe);
-                    }
-                    return recipes;
+                        Label = (string)result["strMeal"],
+                        Url = (string)result["strSource"],
+                        Ingredients = GetIngredients((string)result["idMeal"]),
+                        ImageUrl = (string)result["strMealThumb"],
+                        Instructions = (string)result["strInstructions"]
+                    }).ToList();
                 }
                 else
                 {
@@ -86,12 +103,44 @@ namespace RezeptAnwendung
             }
         }
 
+        private List<string> GetIngredients(string recipeId)
+        {
+            var client = new RestClient($"https://www.themealdb.com/api/json/v1/1/lookup.php?i={recipeId}");
+            var response = client.Get(new RestRequest());
+
+            if (response.IsSuccessful)
+            {
+                var content = response.Content;
+                var json = JObject.Parse(content);
+
+                var ingredients = new List<string>();
+
+                var result = json["meals"][0];
+                for (int i = 1; i <= 20; i++)
+                {
+                    var ingredient = (string)result[$"strIngredient{i}"];
+                    var measure = (string)result[$"strMeasure{i}"];
+                    if (!string.IsNullOrWhiteSpace(ingredient))
+                    {
+                        ingredients.Add($"{measure} {ingredient}".Trim());
+                    }
+                }
+
+                return ingredients;
+            }
+            else
+            {
+                MessageBox.Show("Fehler beim Abrufen der Zutaten. Bitte versuchen Sie es erneut.");
+                return new List<string>();
+            }
+        }
+
         private void DisplayRecipes(List<Recipe> recipes)
         {
             RecipeListBox.ItemsSource = recipes;
         }
 
-        private void RecipeListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        private void RecipeListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (RecipeListBox.SelectedItem != null)
             {
@@ -108,23 +157,17 @@ namespace RezeptAnwendung
 
         private void RecipeUrlHyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
         {
-            // Öffne das Rezept-URL im Standardwebbrowser
             System.Diagnostics.Process.Start(e.Uri.ToString());
             e.Handled = true;
         }
 
-
+        private void CategoryComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (CategoryComboBox.SelectedItem != null)
+            {
+                string selectedCategory = CategoryComboBox.SelectedItem.ToString();
+                MessageBox.Show($"Ausgewählte Kategorie: {selectedCategory}");
+            }
+        }
     }
-
-    public class Recipe
-    {
-        public string Label { get; set; }
-        public List<string> Ingredients { get; set; }
-        public string Url { get; set; }
-        public string Preparation { get; set; }
-        public string ImageUrl { get; set; }
-    }
-
-
-
 }
