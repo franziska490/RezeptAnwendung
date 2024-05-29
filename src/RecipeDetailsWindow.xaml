@@ -5,14 +5,15 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" MinHeight="146.693"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Margin="10">
+        <StackPanel Grid.Row="0" Margin="10,10,10,10">
             <Label x:Name="TitleLabel" FontWeight="Bold" FontSize="16"/>
         </StackPanel>
 
