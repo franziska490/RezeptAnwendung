@@ -17,10 +17,11 @@ namespace RezeptAnwendung
 
         public MainWindow()
         {
-            InitializeComponent();
+            InitializeComponent(); // Wichtig: Aufruf von InitializeComponent()
+            LoadMealCategories(); // Lade die Mahlkategorien
 
-            // Lade die Mahlkategorien
-            LoadMealCategories();
+            // Setze den DataContext für das Fenster
+            DataContext = this;
         }
 
         private async void LoadMealCategories()
@@ -55,12 +56,12 @@ namespace RezeptAnwendung
             }
         }
 
-        private void SearchButton_Click(object sender, RoutedEventArgs e)
+        private async void SearchButton_Click(object sender, RoutedEventArgs e)
         {
             string query = SearchTextBox.Text.Trim();
             if (!string.IsNullOrWhiteSpace(query))
             {
-                var recipes = SearchRecipes(query);
+                var recipes = await SearchRecipesAsync(query);
                 DisplayRecipes(recipes);
             }
             else
@@ -69,10 +70,11 @@ namespace RezeptAnwendung
             }
         }
 
-        private List<Recipe> SearchRecipes(string query)
+        private async Task<List<Recipe>> SearchRecipesAsync(string query)
         {
             var client = new RestClient($"{MealDbApiUrl}?s={query}");
-            var response = client.Get(new RestRequest());
+            var request = new RestRequest();
+            var response = await client.ExecuteAsync(request);
 
             if (response.IsSuccessful)
             {
@@ -81,14 +83,23 @@ namespace RezeptAnwendung
 
                 if (json["meals"] != null)
                 {
-                    return json["meals"].Select(result => new Recipe
+                    var recipes = new List<Recipe>();
+
+                    foreach (var result in json["meals"])
                     {
-                        Label = (string)result["strMeal"],
-                        Url = (string)result["strSource"],
-                        Ingredients = GetIngredients((string)result["idMeal"]),
-                        ImageUrl = (string)result["strMealThumb"],
-                        Instructions = (string)result["strInstructions"]
-                    }).ToList();
+                        var recipe = new Recipe
+                        {
+                            Label = (string)result["strMeal"],
+                            Url = (string)result["strSource"],
+                            Ingredients = await GetIngredientsAsync((string)result["idMeal"]),
+                            ImageUrl = (string)result["strMealThumb"],
+                            Instructions = (string)result["strInstructions"],
+                            Rating = 0 // Default rating, könnte von einer gespeicherten Quelle geladen werden
+                        };
+                        recipes.Add(recipe);
+                    }
+
+                    return recipes;
                 }
                 else
                 {
@@ -103,10 +114,11 @@ namespace RezeptAnwendung
             }
         }
 
-        private List<string> GetIngredients(string recipeId)
+        private async Task<List<string>> GetIngredientsAsync(string recipeId)
         {
             var client = new RestClient($"https://www.themealdb.com/api/json/v1/1/lookup.php?i={recipeId}");
-            var response = client.Get(new RestRequest());
+            var request = new RestRequest();
+            var response = await client.ExecuteAsync(request);
 
             if (response.IsSuccessful)
             {
@@ -153,12 +165,6 @@ namespace RezeptAnwendung
         {
             RecipeDetailsWindow recipeDetailsWindow = new RecipeDetailsWindow(recipe);
             recipeDetailsWindow.ShowDialog();
-        }
-
-        private void RecipeUrlHyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
-        {
-            System.Diagnostics.Process.Start(e.Uri.ToString());
-            e.Handled = true;
         }
 
         private void CategoryComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
