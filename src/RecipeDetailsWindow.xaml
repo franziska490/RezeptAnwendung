@@ -20,20 +20,7 @@
 
         <Image x:Name="RecipeImage" Grid.Row="1" Margin="480,55,120,269" Width="200" Height="200"/>
 
+
         <TextBox x:Name="CookingInstructionsTextBox" Grid.Row="1" Margin="10,290,0,10" TextWrapping="Wrap" AcceptsReturn="True" IsReadOnly="True" RenderTransformOrigin="0.498,-7.517"/>
-
-        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-            <Label Content="Bewertung:" VerticalAlignment="Center"/>
-            <ComboBox x:Name="RatingComboBox" Width="100" Margin="5,0,0,0">
-                <ComboBoxItem Content="1"/>
-                <ComboBoxItem Content="2"/>
-                <ComboBoxItem Content="3"/>
-                <ComboBoxItem Content="4"/>
-                <ComboBoxItem Content="5"/>
-            </ComboBox>
-            <Button Content="Bewerten" Margin="10,0,0,0" Click="RateButton_Click"/>
-        </StackPanel>
-
-        <Label x:Name="CurrentRatingLabel" Grid.Row="4" HorizontalAlignment="Center" Margin="10"/>
     </Grid>
 </Window>

@@ -1,6 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace RezeptAnwendung
+
 {
     public class Recipe
     {
@@ -9,6 +14,8 @@ namespace RezeptAnwendung
         public List<string> Ingredients { get; set; }
         public string ImageUrl { get; set; }
         public string Instructions { get; set; }
-        public double Rating { get; set; }
+        public string Category { get; set; }
     }
 }
+
+
