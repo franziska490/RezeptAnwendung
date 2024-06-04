@@ -1,5 +1,5 @@
 ﻿
-using RezeptAnwendug;
+
 using System;
 using System.Windows;
 using System.Windows.Media.Imaging;
@@ -41,7 +41,12 @@ namespace RezeptAnwendung
             e.Handled = true;
         }
 
-        private void AddToMealPlanButton_Click(object sender, RoutedEventArgs e)
+        private Recipe Get_recipe()
+        {
+            return _recipe;
+        }
+
+        private void AddToMealPlanButton_Click(object sender, RoutedEventArgs e, Recipe _recipe)
         {
             _mealPlanner.Deserialize();
             _mealPlanner.AddRecipe(_recipe);
