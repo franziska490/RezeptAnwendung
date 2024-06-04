@@ -46,7 +46,7 @@ namespace RezeptAnwendung
             return _recipe;
         }
 
-        private void AddToMealPlanButton_Click(object sender, RoutedEventArgs e, Recipe _recipe)
+        private void AddToMealPlanButton_Click(object sender, RoutedEventArgs e)
         {
             _mealPlanner.Deserialize();
             _mealPlanner.AddRecipe(_recipe);
