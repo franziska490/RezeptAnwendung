@@ -4,8 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RezeptAnwendung
-
+namespace RezeptAnwendug
 {
     public class Recipe
     {

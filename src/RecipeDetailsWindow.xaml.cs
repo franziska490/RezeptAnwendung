@@ -1,4 +1,5 @@
-﻿using RezeptAnwendung;
+﻿
+using RezeptAnwendug;
 using System;
 using System.Windows;
 using System.Windows.Media.Imaging;
@@ -7,10 +8,15 @@ namespace RezeptAnwendung
 {
     public partial class RecipeDetailsWindow : Window
     {
+        private Recipe _recipe;
+        private MealPlanner _mealPlanner;
         public RecipeDetailsWindow(Recipe recipe)
         {
             InitializeComponent();
             DisplayRecipeDetails(recipe);
+            _recipe = recipe;
+            _mealPlanner = new MealPlanner();
+            DataContext = _recipe;
         }
 
         private void DisplayRecipeDetails(Recipe recipe)
@@ -33,6 +39,13 @@ namespace RezeptAnwendung
         {
             System.Diagnostics.Process.Start(e.Uri.ToString());
             e.Handled = true;
+        }
+
+        private void AddToMealPlanButton_Click(object sender, RoutedEventArgs e)
+        {
+            _mealPlanner.Deserialize();
+            _mealPlanner.AddRecipe(_recipe);
+            MessageBox.Show($"Wurde zum Essensplan hinzugefügt!");
         }
     }
 }

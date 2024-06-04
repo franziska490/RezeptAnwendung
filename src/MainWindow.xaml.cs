@@ -12,16 +12,21 @@ namespace RezeptAnwendung
     public partial class MainWindow : Window
     {
         private const string MealDbApiUrl = "https://www.themealdb.com/api/json/v1/1/search.php";
+        private const string CategoryApiUrl = "https://www.themealdb.com/api/json/v1/1/categories.php";
+        private const string LookupApiUrl = "https://www.themealdb.com/api/json/v1/1/lookup.php?i=";
 
         public List<string> Categories { get; private set; }
+        private MealPlanner mealPlanner;
 
         public MainWindow()
         {
-            InitializeComponent(); // Wichtig: Aufruf von InitializeComponent()
-            LoadMealCategories(); // Lade die Mahlkategorien
+            InitializeComponent();
+            mealPlanner = new MealPlanner();
+            mealPlanner.Deserialize();
+            DisplayMealPlan();
 
-            // Setze den DataContext für das Fenster
-            DataContext = this;
+            // Load meal categories
+            LoadMealCategories();
         }
 
         private async void LoadMealCategories()
@@ -33,13 +38,13 @@ namespace RezeptAnwendung
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Fehler beim Laden der Mahlkategorien: {ex.Message}");
+                MessageBox.Show($"Error loading meal categories: {ex.Message}");
             }
         }
 
         private async Task<List<string>> GetMealCategoriesAsync()
         {
-            var client = new RestClient("https://www.themealdb.com/api/json/v1/1/categories.php");
+            var client = new RestClient(CategoryApiUrl);
             var request = new RestRequest();
             var response = await client.ExecuteAsync(request);
 
@@ -52,29 +57,29 @@ namespace RezeptAnwendung
             }
             else
             {
-                throw new Exception("Fehler beim Abrufen der Mahlkategorien.");
+                throw new Exception("Error fetching meal categories.");
             }
         }
 
-        private async void SearchButton_Click(object sender, RoutedEventArgs e)
+        private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
             string query = SearchTextBox.Text.Trim();
+            string selectedCategory = CategoryComboBox.SelectedItem as string;
             if (!string.IsNullOrWhiteSpace(query))
             {
-                var recipes = await SearchRecipesAsync(query);
+                var recipes = SearchRecipes(query, selectedCategory);
                 DisplayRecipes(recipes);
             }
             else
             {
-                MessageBox.Show("Bitte geben Sie einen Suchbegriff ein.");
+                MessageBox.Show("Please enter a search term.");
             }
         }
 
-        private async Task<List<Recipe>> SearchRecipesAsync(string query)
+        private List<Recipe> SearchRecipes(string query, string category)
         {
             var client = new RestClient($"{MealDbApiUrl}?s={query}");
-            var request = new RestRequest();
-            var response = await client.ExecuteAsync(request);
+            var response = client.Get(new RestRequest());
 
             if (response.IsSuccessful)
             {
@@ -83,42 +88,40 @@ namespace RezeptAnwendung
 
                 if (json["meals"] != null)
                 {
-                    var recipes = new List<Recipe>();
-
-                    foreach (var result in json["meals"])
+                    var recipes = json["meals"].Select(result => new Recipe
                     {
-                        var recipe = new Recipe
-                        {
-                            Label = (string)result["strMeal"],
-                            Url = (string)result["strSource"],
-                            Ingredients = await GetIngredientsAsync((string)result["idMeal"]),
-                            ImageUrl = (string)result["strMealThumb"],
-                            Instructions = (string)result["strInstructions"],
-                            Rating = 0 // Default rating, könnte von einer gespeicherten Quelle geladen werden
-                        };
-                        recipes.Add(recipe);
+                        Label = (string)result["strMeal"],
+                        Url = (string)result["strSource"],
+                        Ingredients = GetIngredients((string)result["idMeal"]),
+                        ImageUrl = (string)result["strMealThumb"],
+                        Instructions = (string)result["strInstructions"],
+                        Category = (string)result["strCategory"]
+                    }).ToList();
+
+                    if (!string.IsNullOrEmpty(category))
+                    {
+                        recipes = recipes.Where(r => r.Category.Equals(category, StringComparison.OrdinalIgnoreCase)).ToList();
                     }
 
                     return recipes;
                 }
                 else
                 {
-                    MessageBox.Show("Keine Rezepte gefunden.");
+                    MessageBox.Show("No recipes found.");
                     return new List<Recipe>();
                 }
             }
             else
             {
-                MessageBox.Show("Fehler beim Abrufen der Rezepte. Bitte versuchen Sie es erneut.");
+                MessageBox.Show("Error fetching recipes. Please try again.");
                 return new List<Recipe>();
             }
         }
 
-        private async Task<List<string>> GetIngredientsAsync(string recipeId)
+        private List<string> GetIngredients(string recipeId)
         {
-            var client = new RestClient($"https://www.themealdb.com/api/json/v1/1/lookup.php?i={recipeId}");
-            var request = new RestRequest();
-            var response = await client.ExecuteAsync(request);
+            var client = new RestClient($"{LookupApiUrl}{recipeId}");
+            var response = client.Get(new RestRequest());
 
             if (response.IsSuccessful)
             {
@@ -142,7 +145,7 @@ namespace RezeptAnwendung
             }
             else
             {
-                MessageBox.Show("Fehler beim Abrufen der Zutaten. Bitte versuchen Sie es erneut.");
+                MessageBox.Show("Error fetching ingredients. Please try again.");
                 return new List<string>();
             }
         }
@@ -167,12 +170,43 @@ namespace RezeptAnwendung
             recipeDetailsWindow.ShowDialog();
         }
 
+        private void RecipeUrlHyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
+        {
+            System.Diagnostics.Process.Start(e.Uri.ToString());
+            e.Handled = true;
+        }
+
         private void CategoryComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (CategoryComboBox.SelectedItem != null)
             {
                 string selectedCategory = CategoryComboBox.SelectedItem.ToString();
-                MessageBox.Show($"Ausgewählte Kategorie: {selectedCategory}");
+                MessageBox.Show($"Selected Category: {selectedCategory}");
+            }
+        }
+
+        private void DisplayMealPlan()
+        {
+            MealPlanTextBox.Text = mealPlanner.GetMealPlanContent();
+        }
+
+        private void ShowRecipeDetailsButton_Click(object sender, RoutedEventArgs e)
+        {
+            var recipe = (sender as Button)?.DataContext as Recipe;
+            if (recipe != null)
+            {
+                var detailsWindow = new RecipeDetailsWindow(recipe);
+                detailsWindow.Show();
+            }
+        }
+
+        private void AddToMealPlanButton_Click(object sender, RoutedEventArgs e)
+        {
+            var recipe = (sender as Button)?.DataContext as Recipe;
+            if (recipe != null)
+            {
+                mealPlanner.AddRecipe(recipe);
+                DisplayMealPlan();
             }
         }
     }

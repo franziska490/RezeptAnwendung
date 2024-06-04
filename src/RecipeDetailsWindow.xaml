@@ -16,11 +16,18 @@
             <Label x:Name="TitleLabel" FontWeight="Bold" FontSize="16"/>
         </StackPanel>
 
-        <TextBox x:Name="IngredientsTextBox" Margin="10,0,445,185" TextWrapping="Wrap" AcceptsReturn="True" IsReadOnly="True" Grid.RowSpan="2"/>
+        <TextBox x:Name="IngredientsTextBox" Margin="19,10,488,277" TextWrapping="Wrap" AcceptsReturn="True" IsReadOnly="True" BorderBrush="#FF060606" Grid.Row="1" Background="{x:Null}"/>
 
-        <Image x:Name="RecipeImage" Grid.Row="1" Margin="480,55,120,269" Width="200" Height="200"/>
+        <Image x:Name="RecipeImage" Grid.Row="1" Margin="512,56,88,298" Width="200" Height="200"/>
 
+        <TextBox x:Name="CookingInstructionsTextBox" Grid.Row="1" Margin="10,290,0,10" TextWrapping="Wrap" AcceptsReturn="True" IsReadOnly="True" RenderTransformOrigin="0.498,-7.517" Background="{x:Null}"/>
 
-        <TextBox x:Name="CookingInstructionsTextBox" Grid.Row="1" Margin="10,290,0,10" TextWrapping="Wrap" AcceptsReturn="True" IsReadOnly="True" RenderTransformOrigin="0.498,-7.517"/>
+        <StackPanel RenderTransformOrigin="0.523,0.752" Margin="360,0,313,481" Grid.RowSpan="2">
+            <TextBlock Text="{Binding Name}" FontSize="20" Margin="10"/>
+            <Button Content="Add to Meal Plan" Click="AddToMealPlanButton_Click" Width="110" RenderTransformOrigin="0.781,-2.421" FontWeight="Bold" Background="#FFDDDDDD"/>
+            <TextBlock Text="{Binding Instructions}" TextWrapping="Wrap" Margin="10"/>
+        </StackPanel>
+        <TextBlock HorizontalAlignment="Left" Height="22" Margin="350,16,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="17"/>
+        <TextBlock HorizontalAlignment="Left" Height="268" Margin="482,25,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="285"/>
     </Grid>
 </Window>

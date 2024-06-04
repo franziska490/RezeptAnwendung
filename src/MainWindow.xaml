@@ -2,7 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="RezeptAnwendung" Height="450" Width="600">
-    <Grid Background="#FF557655">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -13,23 +13,44 @@
         </Grid.ColumnDefinitions>
 
         <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="10,10,10,10">
-            <TextBox x:Name="SearchTextBox" Width="300" Margin="0,0,10,0" Background="#FFD2D0D0" Height="24" />
-            <Button x:Name="SearchButton" Content="Search" Click="SearchButton_Click" Width="60" FontSize="10" Background="#FFD2D0D0" BorderBrush="#FF8F8181"/>
+            <TextBox x:Name="SearchTextBox" Width="193" Margin="0,0,10,0" Height="33" FontSize="18" Background="{x:Null}" >
+                <TextBox.BorderBrush>
+                    <ImageBrush/>
+                </TextBox.BorderBrush>
+            </TextBox>
+            <Button x:Name="SearchButton" Content="Search" Click="SearchButton_Click" Width="60" FontSize="20" FontWeight="Bold" FontFamily="Bahnschrift SemiLight SemiCondensed" Background="{x:Null}">
+                <Button.BorderBrush>
+                    <ImageBrush/>
+                </Button.BorderBrush>
+            </Button>
         </StackPanel>
 
-        <ListBox x:Name="RecipeListBox" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="10" SelectionChanged="RecipeListBox_SelectionChanged">
+        <ListBox x:Name="RecipeListBox" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="214,9,10,10" SelectionChanged="RecipeListBox_SelectionChanged" Background="{x:Null}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding Label}" FontWeight="Bold" FontSize="16" Margin="0,0,0,5"/>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Label}" FontWeight="Bold" FontSize="16" Margin="0,0,0,5"/>
+
+                    </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <ComboBox x:Name="CategoryComboBox" Grid.Column="1" Width="150" VerticalAlignment="Center"
-                  Margin="401,0,49,0" SelectionChanged="CategoryComboBox_SelectionChanged">
+        <!-- ComboBox für Mahlkategorien -->
+        <ComboBox x:Name="CategoryComboBox" Grid.Column="1" VerticalAlignment="Center"
+                  Margin="486,0,59,0" SelectionChanged="CategoryComboBox_SelectionChanged" Height="33">
+            <!-- Binding der ItemsSource an die Liste von Mahlkategorien -->
             <ComboBox.ItemsSource>
                 <Binding Path="Categories" RelativeSource="{RelativeSource AncestorType={x:Type Window}}"/>
             </ComboBox.ItemsSource>
         </ComboBox>
+
+        <!-- TextBox für den Essensplan -->
+        <TextBox x:Name="MealPlanTextBox" Grid.Row="1" Grid.Column="1" IsReadOnly="True" Margin="10,31,407,0" RenderTransformOrigin="0.617,0.536" Background="{x:Null}" Height="299" VerticalAlignment="Top">
+            <TextBox.BorderBrush>
+                <ImageBrush/>
+            </TextBox.BorderBrush>
+        </TextBox>
+        <TextBlock Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="26" Margin="490,0,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="32" RenderTransformOrigin="1.034,0.514"/>
     </Grid>
 </Window>

@@ -6,7 +6,7 @@
 | Was wurde gemacht                  | Wann               | Wer    |
 |------------------------------------|--------------------|--------|
 | Projektidee/Umsetzung überlegen    | 24.04 - 8.5.2024   | Beide  |
-| Rezept API Edamam Implementieren   | 08.05 - 09.05.2024 | Laura  |
+| Rezept API themealdb Implementieren   | 08.05 - 09.05.2024 | Laura  |
 | GUI Anfang                         | 08.05 - 09.05.2024 | Franziska |
 | Inhalt                             | Inhalt             | Inhalt |
 | Inhalt                             | Inhalt             | Inhalt |
@@ -104,3 +104,21 @@ Properties, Methoden, Konstruktoren
 ## Quellen
 - Edamam Recipe Search API `https://developer.edamam.com/admin/applications`
 
+
+
+Chatgpt HEFTIG
+
+
+### Erläuterung der Änderungen:
+
+1. **Laden der Kategorien:**
+   - Die Methode `LoadMealCategories` lädt die Kategorien beim Start und füllt die `ComboBox`.
+
+2. **Suchfunktion anpassen:**
+   - `SearchRecipes` wurde erweitert, um auch nach der Kategorie zu filtern.
+   - `SearchButton_Click` berücksichtigt jetzt die ausgewählte Kategorie.
+
+3. **Kategorieauswahl ändern:**
+   - `CategoryComboBox_SelectionChanged` lädt die Rezepte basierend auf der ausgewählten Kategorie und dem Suchbegriff.
+
+Diese Änderungen ermöglichen es dir, Rezepte nach Kategorie zu filtern und gleichzeitig einen Suchbegriff zu verwenden. Dadurch wird die Benutzerfreundlichkeit deiner Anwendung verbessert.
