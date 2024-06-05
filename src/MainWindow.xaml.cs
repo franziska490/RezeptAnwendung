@@ -10,7 +10,7 @@ using System.Windows.Controls;
 
 
 namespace RezeptAnwendung
-{
+{ 
     public partial class MainWindow : Window
     {
         private const string MealDbApiUrl = "https://www.themealdb.com/api/json/v1/1/search.php";
