@@ -1,12 +1,13 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
+using NLog;
 
 namespace RezeptAnwendung
 {
     public class MealPlanner
     {
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private const string FilePath = "mealplan.xml";
         private List<string> MealPlan { get; set; }
 
@@ -17,15 +18,23 @@ namespace RezeptAnwendung
 
         public void AddRecipe(Recipe recipe)
         {
-            MealPlan.Add(recipe.Label);  // Speichern Sie nur den Namen des Rezepts
+            MealPlan.Add(recipe.Label);  // Save only the recipe name
             Serialize();
+            Logger.Info($"Added recipe '{recipe.Label}' to meal plan.");
+        }
+
+        public void Clear()
+        {
+            MealPlan.Clear();
+            Serialize();
+            Logger.Info("Cleared meal plan.");
         }
 
         public string GetMealPlanContent()
         {
             if (MealPlan.Count == 0) return "No meals planned.";
 
-            return string.Join("\n", MealPlan);  // Gibt die Liste der Gerichtnamen zurück
+            return string.Join("\n", MealPlan);  // Return the list of dish names
         }
 
         public void Serialize()
@@ -35,6 +44,7 @@ namespace RezeptAnwendung
             {
                 serializer.Serialize(fs, MealPlan);
             }
+            Logger.Info("Serialized meal plan to file.");
         }
 
         public void Deserialize()
@@ -46,6 +56,7 @@ namespace RezeptAnwendung
                 {
                     MealPlan = (List<string>)serializer.Deserialize(fs);
                 }
+                Logger.Info("Deserialized meal plan from file.");
             }
         }
     }

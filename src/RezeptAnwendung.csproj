@@ -8,10 +8,24 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="1window.png" />
+    <None Remove="Check.png" />
+    <None Remove="Meal.jpg" />
+    <None Remove="Searc h.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="NLog" Version="5.3.2" />
     <PackageReference Include="NLog.Config" Version="4.7.15" />
     <PackageReference Include="RestSharp" Version="110.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="1window.png" />
+    <Resource Include="Check.png" />
+    <Resource Include="Meal.jpg" />
+    <Resource Include="Searc h.png" />
   </ItemGroup>
 
 </Project>

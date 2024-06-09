@@ -6,13 +6,13 @@ using System.Windows;
 using RestSharp;
 using Newtonsoft.Json.Linq;
 using System.Windows.Controls;
-
-
+using NLog;
 
 namespace RezeptAnwendung
-{ 
+{
     public partial class MainWindow : Window
     {
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private const string MealDbApiUrl = "https://www.themealdb.com/api/json/v1/1/search.php";
         private const string CategoryApiUrl = "https://www.themealdb.com/api/json/v1/1/categories.php";
         private const string LookupApiUrl = "https://www.themealdb.com/api/json/v1/1/lookup.php?i=";
@@ -23,6 +23,7 @@ namespace RezeptAnwendung
         public MainWindow()
         {
             InitializeComponent();
+            Logger.Info("Application started.");
             mealPlanner = new MealPlanner();
             mealPlanner.Deserialize();
             DisplayMealPlan();
@@ -37,9 +38,11 @@ namespace RezeptAnwendung
             {
                 Categories = await GetMealCategoriesAsync();
                 CategoryComboBox.ItemsSource = Categories;
+                Logger.Info("Meal categories loaded successfully.");
             }
             catch (Exception ex)
             {
+                Logger.Error(ex, "Error loading meal categories.");
                 MessageBox.Show($"Error loading meal categories: {ex.Message}");
             }
         }
@@ -59,6 +62,7 @@ namespace RezeptAnwendung
             }
             else
             {
+                Logger.Error("Error fetching meal categories.");
                 throw new Exception("Error fetching meal categories.");
             }
         }
@@ -105,16 +109,19 @@ namespace RezeptAnwendung
                         recipes = recipes.Where(r => r.Category.Equals(category, StringComparison.OrdinalIgnoreCase)).ToList();
                     }
 
+                    Logger.Info($"{recipes.Count} recipes found for query '{query}' in category '{category}'.");
                     return recipes;
                 }
                 else
                 {
+                    Logger.Info("No recipes found.");
                     MessageBox.Show("No recipes found.");
                     return new List<Recipe>();
                 }
             }
             else
             {
+                Logger.Error("Error fetching recipes.");
                 MessageBox.Show("Error fetching recipes. Please try again.");
                 return new List<Recipe>();
             }
@@ -147,6 +154,7 @@ namespace RezeptAnwendung
             }
             else
             {
+                Logger.Error("Error fetching ingredients.");
                 MessageBox.Show("Error fetching ingredients. Please try again.");
                 return new List<string>();
             }
@@ -210,6 +218,12 @@ namespace RezeptAnwendung
                 mealPlanner.AddRecipe(recipe);
                 DisplayMealPlan();
             }
+        }
+
+        private void ClearMealPlanButton_Click(object sender, RoutedEventArgs e)
+        {
+            mealPlanner.Clear();
+            DisplayMealPlan();
         }
     }
 }

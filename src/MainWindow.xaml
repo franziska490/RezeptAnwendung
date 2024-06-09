@@ -3,6 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="RezeptAnwendung" Height="450" Width="600">
     <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="/1window.png"/>
+        </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -13,19 +16,31 @@
         </Grid.ColumnDefinitions>
 
         <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="10,10,10,10">
-            <TextBox x:Name="SearchTextBox" Width="193" Margin="0,0,10,0" Height="33" FontSize="18" Background="{x:Null}" >
+            <TextBox x:Name="SearchTextBox" Width="193" Margin="0,0,10,0" Height="33" FontSize="18" Foreground="#FFE0D7D7" >
+                <TextBox.Background>
+                    <ImageBrush ImageSource="/Searc h.png"/>
+                </TextBox.Background>
                 <TextBox.BorderBrush>
                     <ImageBrush/>
                 </TextBox.BorderBrush>
             </TextBox>
-            <Button x:Name="SearchButton" Content="Search" Click="SearchButton_Click" Width="60" FontSize="20" FontWeight="Bold" FontFamily="Bahnschrift SemiLight SemiCondensed" Background="{x:Null}">
+            <Button x:Name="SearchButton" Content="Search" Click="SearchButton_Click" Width="60" FontSize="20" FontWeight="Bold" FontFamily="Bahnschrift SemiLight SemiCondensed" Foreground="#FFE0D7D7">
+                <Button.Background>
+                    <ImageBrush/>
+                </Button.Background>
                 <Button.BorderBrush>
                     <ImageBrush/>
                 </Button.BorderBrush>
             </Button>
         </StackPanel>
 
-        <ListBox x:Name="RecipeListBox" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="214,9,10,10" SelectionChanged="RecipeListBox_SelectionChanged" Background="{x:Null}">
+        <ListBox x:Name="RecipeListBox" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="245,83,10,10" SelectionChanged="RecipeListBox_SelectionChanged" Foreground="#FFE0D7D7">
+            <ListBox.BorderBrush>
+                <ImageBrush/>
+            </ListBox.BorderBrush>
+            <ListBox.Background>
+                <ImageBrush/>
+            </ListBox.Background>
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
@@ -38,7 +53,7 @@
 
         <!-- ComboBox für Mahlkategorien -->
         <ComboBox x:Name="CategoryComboBox" Grid.Column="1" VerticalAlignment="Center"
-                  Margin="486,0,59,0" SelectionChanged="CategoryComboBox_SelectionChanged" Height="33">
+                  Margin="413,0,133,0" SelectionChanged="CategoryComboBox_SelectionChanged" Height="33" RenderTransformOrigin="0,0.516">
             <!-- Binding der ItemsSource an die Liste von Mahlkategorien -->
             <ComboBox.ItemsSource>
                 <Binding Path="Categories" RelativeSource="{RelativeSource AncestorType={x:Type Window}}"/>
@@ -46,11 +61,24 @@
         </ComboBox>
 
         <!-- TextBox für den Essensplan -->
-        <TextBox x:Name="MealPlanTextBox" Grid.Row="1" Grid.Column="1" IsReadOnly="True" Margin="10,31,407,0" RenderTransformOrigin="0.617,0.536" Background="{x:Null}" Height="299" VerticalAlignment="Top">
+        <TextBox x:Name="MealPlanTextBox" Grid.Row="1" Grid.Column="1" IsReadOnly="True" Margin="10,31,407,51" RenderTransformOrigin="0.617,0.536" FontSize="14" FontFamily="Georgia">
+            <TextBox.Background>
+                <ImageBrush ImageSource="/Meal.jpg"/>
+            </TextBox.Background>
             <TextBox.BorderBrush>
                 <ImageBrush/>
             </TextBox.BorderBrush>
         </TextBox>
-        <TextBlock Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="26" Margin="490,0,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="32" RenderTransformOrigin="1.034,0.514"/>
+
+        <Button Content="Clear" Click="ClearMealPlanButton_Click" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,26" Background="#FF948E8E" BorderBrush="#FF948E8E" FontWeight="Bold" Width="66"/>
+        <!-- Neuer Button zum Leeren -->
+
+        <TextBlock Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="26" Margin="418,0,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="24" RenderTransformOrigin="1.034,0.514">
+            <TextBlock.Background>
+                <ImageBrush ImageSource="/Check.png"/>
+            </TextBlock.Background>
+        </TextBlock>
+
+
     </Grid>
 </Window>
