@@ -5,6 +5,11 @@ VisualStudioVersion = 17.7.34221.43
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RezeptAnwendung", "RezeptAnwendung.csproj", "{5B7663F1-7321-4BAC-861A-AF8D2211B36F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Projektmappenelemente", "Projektmappenelemente", "{44E7C515-C7B0-4EBF-8917-39D5B2464AB9}"
+	ProjectSection(SolutionItems) = preProject
+		NLog.config = NLog.config
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

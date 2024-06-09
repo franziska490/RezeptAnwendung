@@ -1,15 +1,18 @@
 ﻿
-
 using System;
 using System.Windows;
 using System.Windows.Media.Imaging;
+using NLog;
+using RezeptAnwendung;
 
 namespace RezeptAnwendung
 {
     public partial class RecipeDetailsWindow : Window
     {
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private Recipe _recipe;
         private MealPlanner _mealPlanner;
+
         public RecipeDetailsWindow(Recipe recipe)
         {
             InitializeComponent();
@@ -17,6 +20,7 @@ namespace RezeptAnwendung
             _recipe = recipe;
             _mealPlanner = new MealPlanner();
             DataContext = _recipe;
+            Logger.Info($"Opened details window for recipe '{recipe.Label}'.");
         }
 
         private void DisplayRecipeDetails(Recipe recipe)
@@ -39,21 +43,20 @@ namespace RezeptAnwendung
         {
             System.Diagnostics.Process.Start(e.Uri.ToString());
             e.Handled = true;
-        }
-
-        private Recipe Get_recipe()
-        {
-            return _recipe;
+            Logger.Info($"Navigated to recipe URL: {e.Uri}");
         }
 
         private void AddToMealPlanButton_Click(object sender, RoutedEventArgs e)
         {
             _mealPlanner.Deserialize();
             _mealPlanner.AddRecipe(_recipe);
-            MessageBox.Show($"Wurde zum Essensplan hinzugefügt!");
+
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+            Logger.Info($"Closed details window for recipe '{_recipe.Label}'.");
         }
     }
 }
-
-
-
