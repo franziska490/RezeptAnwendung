@@ -3,6 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Rezeptdetails" Height="600" Width="800">
     <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="/2 window.png"/>
+        </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -13,21 +16,37 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0" Margin="10">
-            <Label x:Name="TitleLabel" FontWeight="Bold" FontSize="16"/>
+            <Label x:Name="TitleLabel" FontWeight="Bold" FontSize="16" Foreground="#FFE0D7D7"/>
         </StackPanel>
 
-        <TextBox x:Name="IngredientsTextBox" Margin="19,10,488,277" TextWrapping="Wrap" AcceptsReturn="True" IsReadOnly="True" BorderBrush="#FF060606" Grid.Row="1" Background="{x:Null}"/>
+        <TextBox x:Name="IngredientsTextBox" Margin="25,139,550,28" TextWrapping="Wrap" AcceptsReturn="True" IsReadOnly="True" BorderBrush="#FF060606" Grid.Row="1" Foreground="#FFE0D7D7" Background="{x:Null}" FontSize="14" FontFamily="Bahnschrift Light SemiCondensed"/>
 
-        <Image x:Name="RecipeImage" Grid.Row="1" Margin="512,56,88,298" Width="200" Height="200"/>
+        <Image x:Name="RecipeImage" Grid.Row="1" Margin="499,62,101,292" Width="200" Height="200" RenderTransformOrigin="0.162,0.544"/>
 
-        <TextBox x:Name="CookingInstructionsTextBox" Grid.Row="1" Margin="10,290,0,10" TextWrapping="Wrap" AcceptsReturn="True" IsReadOnly="True" RenderTransformOrigin="0.498,-7.517" Background="{x:Null}"/>
+        <TextBox x:Name="CookingInstructionsTextBox" Grid.Row="1" Margin="266,262,10,25" TextWrapping="Wrap" AcceptsReturn="True" IsReadOnly="True" RenderTransformOrigin="0.498,-7.517" Foreground="#FFE0D7D7" FontSize="14">
+            <TextBox.SelectionBrush>
+                <ImageBrush/>
+            </TextBox.SelectionBrush>
+            <TextBox.BorderBrush>
+                <ImageBrush/>
+            </TextBox.BorderBrush>
+            <TextBox.Background>
+                <ImageBrush ImageSource="/lines.png"/>
+            </TextBox.Background>
+        </TextBox>
 
-        <StackPanel RenderTransformOrigin="0.523,0.752" Margin="360,0,313,481" Grid.RowSpan="2">
-            <TextBlock Text="{Binding Name}" FontSize="20" Margin="10"/>
-            <Button Content="Add to Meal Plan" Click="AddToMealPlanButton_Click" Width="110" RenderTransformOrigin="0.781,-2.421" FontWeight="Bold" Background="#FFDDDDDD"/>
-            <TextBlock Text="{Binding Instructions}" TextWrapping="Wrap" Margin="10"/>
-        </StackPanel>
-        <TextBlock HorizontalAlignment="Left" Height="22" Margin="350,16,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="17"/>
-        <TextBlock HorizontalAlignment="Left" Height="268" Margin="482,25,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="285"/>
+
+        <Button Content="Add to Meal Plan" Click="AddToMealPlanButton_Click" Background="#FFDDDDDD" HorizontalAlignment="Left" Height="26" Margin="335,21,0,0" Grid.Row="1" VerticalAlignment="Top" Width="140" FontWeight="Bold"/>
+
+
+
+        <TextBlock HorizontalAlignment="Left" Height="22" Margin="339,25,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="16" RenderTransformOrigin="0.794,0.297">
+            <TextBlock.Background>
+                <ImageBrush ImageSource="/favourite.png"/>
+            </TextBlock.Background>
+        </TextBlock>
+
+        <Button Content="X" HorizontalAlignment="Left" Height="32" Margin="725,15,0,0" Grid.Row="1" VerticalAlignment="Top" Width="46" Background="#FF948E8E" FontSize="18" FontWeight="Bold" RenderTransformOrigin="0.736,0.389" Click="Button_Click"/>
+
     </Grid>
 </Window>

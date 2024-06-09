@@ -9,7 +9,10 @@
 
   <ItemGroup>
     <None Remove="1window.png" />
+    <None Remove="2 window.png" />
     <None Remove="Check.png" />
+    <None Remove="favourite.png" />
+    <None Remove="lines.png" />
     <None Remove="Meal.jpg" />
     <None Remove="Searc h.png" />
   </ItemGroup>
@@ -23,7 +26,10 @@
 
   <ItemGroup>
     <Resource Include="1window.png" />
+    <Resource Include="2 window.png" />
     <Resource Include="Check.png" />
+    <Resource Include="favourite.png" />
+    <Resource Include="lines.png" />
     <Resource Include="Meal.jpg" />
     <Resource Include="Searc h.png" />
   </ItemGroup>
